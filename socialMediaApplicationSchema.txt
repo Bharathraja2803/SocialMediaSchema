@@ -1,0 +1,79 @@
+Social Media application Schema
+--------------------------------
+
+authentication
+--------------------
+user_id -> int -> primary key
+password -> String
+role -> String
+
+User
+--------
+user_id -> int -> auto generated -> Primary key
+userName -> String 
+city -> String
+signup_date -> Datetime
+
+
+Follwer
+----------
+user_id -> int -> reference from user
+follower_id -> int -> reference from user
+following_id -> int -> reference from user
+
+
+post
+-------
+post_id -> int ->  primary key 
+user_id -> int -> reference from user
+postedTime -> Datetime
+
+
+conversation
+----------
+conversation_id -> int -> Primary key
+conversation_name -> String
+
+
+group member
+----------
+user_id -> int -> Reference from user
+conversation_id -> int -> reference from conversation
+joined_datetime -> Datetime
+left_datetime -> Datetime
+
+
+message
+-----------
+message id -> int -> Primary Key
+text -> String
+sender_user_id -> reference from user
+datetime -> Datetime
+conversation_id -> int -> reference from conversation
+
+
+notification
+--------------
+notificationId -> int -> primary 
+text -> String
+read_unread -> boolean
+userid -> Ref from user table
+dateTime -> Datetime
+
+
+Comment
+-------------------
+comment_id -> int -> Primary key
+comment_date&Time -> date and Time
+commented_user_id -> reference from User 
+post_id -> int -> reference from post 
+comment_text -> String  
+comment_reply_id -> int -> self join 
+
+
+Like
+---------------
+user_id -> int -> reference from user
+post_id -> int -> reference from post
+
+

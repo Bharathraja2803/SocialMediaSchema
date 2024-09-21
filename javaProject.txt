@@ -1,0 +1,104 @@
+All need to c
+post
+like
+notification
+follow
+
+command
+share
+messgae 
+
+
+User
+--------
+user_id -> int -> auto generated
+userName -> String 
+city -> String
+signup_date -> Date
+
+Follwer
+----------
+follower_id -> int -> ref from user
+following_id -> int -> ref from user
+
+
+post
+-------
+post_id -> int primary key 
+user_id -> reference from user
+postedTime -> Date
+like -> count
+
+
+conversation
+----------
+conversation_id -> int -> Primary key
+conversation_name -> String
+
+
+group member
+----------
+user_id -> int -> Reference from user
+conversation_id -> int -> reference from conversation
+joined_datetime -> Datetime
+left_datetime -> Datetime
+
+
+message
+-----------
+message id -> int -> Primary Key
+text -> String
+sender_user_id -> reference from user
+datetime -> Datetime
+conversation_id -> int -> reference from conversation
+
+
+notification
+--------------
+notificationId -> int -> primary 
+text -> String
+read_unread -> boolean
+userid -> Ref from user table
+dateTime -> Datetime
+
+
+Comment
+-------------------
+comment_id -> int -> Primary key
+comment_date&Time -> date and Time
+commented_user_id -> reference from User 
+post_id -> int -> reference from post 
+comment_text -> String  
+comment_reply_id -> int -> self join 
+
+
+Like
+---------------
+user_id -> int -> reference from user
+post_id -> int -> reference from post
+
+
+authentication
+--------------------
+user_id -> int -> primary key
+password -> String
+role -> String
+
+
+
+log
+----------
+user_id -> int -> reference from user
+post_id -> int reference from feed
+friend_id -> reference by 
+dateTime -> Date
+
+
+feed actions
+-----------
+post_id -> int -> reference from feed\
+datetime -> Date
+postMessage -> String
+commands -> String
+like -> boolean
+user_id -> ref from user table 
