@@ -1,24 +1,21 @@
 Social Media application Schema
 --------------------------------
 
-authentication
---------------------
-user_id -> int -> primary key
-password -> String
-role -> String
-
 User
 --------
 user_id -> int -> auto generated -> Primary key
 userName -> String 
 city -> String
 signup_date -> Datetime
+password -> String -> Hashed
+role -> String
+date_of_birth -> Date
+email_id -> String
 
 
 Follwer
 ----------
 user_id -> int -> reference from user
-follower_id -> int -> reference from user
 following_id -> int -> reference from user
 
 
@@ -27,18 +24,22 @@ post
 post_id -> int ->  primary key 
 user_id -> int -> reference from user
 postedTime -> Datetime
+post_content -> String
 
 
-conversation
+group details
+---------------
+group_id -> int -> primary key
+group_name -> String
+group_created_date -> Datetime
+group_deleted_date -> Datetime
+group_admin_id -> int -> reference from user
+
+
+group_members 
 ----------
-conversation_id -> int -> Primary key
-conversation_name -> String
-
-
-group member
-----------
-user_id -> int -> Reference from user
-conversation_id -> int -> reference from conversation
+group_id -> int ->  reference from group details -> Composite Primary key
+user_id_joined_in_the_group -> int -> Reference from user -> Composite primary key
 joined_datetime -> Datetime
 left_datetime -> Datetime
 
@@ -46,16 +47,18 @@ left_datetime -> Datetime
 message
 -----------
 message id -> int -> Primary Key
-text -> String
+text_message -> String
 sender_user_id -> reference from user
+receiver_user_id -> reference from user -> If this field is filled group_id will be null
 datetime -> Datetime
-conversation_id -> int -> reference from conversation
+read_unread_flag -> boolean value
+group_id -> int -> reference from group details -> if this field is filled received_user_id will be null
 
 
 notification
 --------------
-notificationId -> int -> primary 
-text -> String
+notificationId -> int -> primary key
+notification_text -> String
 read_unread -> boolean
 userid -> Ref from user table
 dateTime -> Datetime
@@ -67,13 +70,13 @@ comment_id -> int -> Primary key
 comment_date&Time -> date and Time
 commented_user_id -> reference from User 
 post_id -> int -> reference from post 
-comment_text -> String  
-comment_reply_id -> int -> self join 
+comment_text -> String 
 
 
 Like
 ---------------
+like_id -> int -> primary key
 user_id -> int -> reference from user
 post_id -> int -> reference from post
-
+like_date_time -> Datetime
 
