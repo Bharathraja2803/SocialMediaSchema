@@ -1,0 +1,145 @@
+Create Table queries:
+
+
+CREATE TABLE users(
+    	user_id int PRIMARY KEY,
+    	user_name varchar(255) NOT NULL,
+    	password varchar(255) NOT NULL,
+    	birthDate date NOT NULL,
+    	role varchar(255) NOT NULL,
+	email_id varchar(255) NOT NULL,
+	city varchar(255),
+	signup_date DATE NOT NULL,
+	signup_time Time NOT NULL
+);
+
+CREATE SEQUENCE user_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY users.user_id;
+
+
+CREATE TABLE follower(
+	user_id int NOT NULL,
+	following_user_id int NOT NULL,
+	CONSTRAINT fk_follower_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
+	CONSTRAINT fk_following_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+
+CREATE TABLE post(
+	post_id int PRIMARY KEY,
+	user_id int,
+	posted_date DATE NOT NULL,
+	posted_time TIME NOT NULL,
+	post_content varchar(1000) NOT NULL,
+	CONSTRAINT fk_post_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+CREATE SEQUENCE post_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY post.post_id;
+
+CREATE TABLE group_detail(
+	group_id int PRIMARY KEY,
+	group_name varchar(255) NOT NULL,
+	group_created_date DATE NOT NULL,
+	group_created_time TIME NOT NULL,
+	group_deleted_date DATE,
+	group_deleted_time TIME,
+	group_admin_id int Not NULL,
+	CONSTRAINT fk_group_admin_id FOREIGN KEY (group_admin_id) REFERENCES users(user_id)
+);
+
+CREATE SEQUENCE group_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY group_detail.group_id;
+
+CREATE TABLE group_member(
+	group_id int,
+	user_id int NOT NULL,
+	user_joined_date DATE NOT NULL, 
+	user_joined_time TIME NOT NULL, 
+	user_left_date DATE,
+	user_left_time TIME,
+	CONSTRAINT fk_group_member_group_id FOREIGN KEY (group_id) REFERENCES group_detail(group_id),
+	CONSTRAINT fk_group_member_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)	
+);
+
+
+CREATE TABLE messages(
+	message_id int PRIMARY KEY,
+	message_text varchar(1000) NOT NULL,
+	sender_user_id int NOT NULL,
+	receiver_user_id int,
+	message_date DATE NOT NULL,
+	message_time TIME NOT NULL,
+	read_unread_flag int NOT NULL,
+	group_id int,
+	CONSTRAINT fk_message_sender_user_id FOREIGN KEY (sender_user_id) REFERENCES users(user_id),
+	CONSTRAINT fk_message_receiver_user_id FOREIGN KEY (receiver_user_id) REFERENCES users(user_id),
+	CONSTRAINT fk_message_group_id FOREIGN KEY (group_id) REFERENCES group_detail(group_id),
+	CONSTRAINT ck_test_boolean_message_read_unread_flag CHECK (read_unread_flag IN (0,1))
+);
+
+
+CREATE SEQUENCE message_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY messages.message_id;
+
+CREATE TABLE notification(
+	notification_id int PRIMARY KEY,
+	notification_text varchar(500) NOT NULL,
+	read_unread_flag int NOT NULL,
+	user_id int NOT NULL,
+	notification_created_date DATE NOT NULL,
+	notification_created_time TIME NOT NULL,
+	CONSTRAINT fk_notification_user_id FOREIGN KEY (user_id) REFERENCES users(user_id),
+	CONSTRAINT ck_test_boolean_notification_read_unread_flag CHECK (read_unread_flag IN (0,1))
+);
+
+CREATE SEQUENCE notification_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY notification.notification_id;
+
+CREATE TABLE comment(
+	comment_id int PRIMARY KEY,
+	comment_date DATE NOT NULL,
+	comment_time Time NOT NULL,
+	comment_user_id int NOT NULL,
+	post_id int NOT NULL,
+	comment_text varchar(1000),
+	CONSTRAINT fk_comment_user_id FOREIGN KEY (comment_user_id) REFERENCES users (user_id),
+	CONSTRAINT fk_comment_post_id FOREIGN KEY (post_id) REFERENCES post (post_id)
+);
+
+CREATE SEQUENCE comment_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY comment.comment_id;
+
+CREATE TABLE likes(
+	like_id int PRIMARY KEY,
+	user_id int NOT NULL,
+	post_id int NOT NULL,
+	like_date DATE NOT NULL,
+	like_time TIME NOT NULL,
+	CONSTRAINT fk_like_user_id FOREIGN KEY (user_id) REFERENCES users (user_id),
+	CONSTRAINT fk_like_post_id FOREIGN KEY (post_id) REFERENCES post (post_id)
+);
+
+CREATE SEQUENCE like_id_sequence
+START 1
+INCREMENT 1
+MINVALUE 1
+OWNED BY likes.like_id;

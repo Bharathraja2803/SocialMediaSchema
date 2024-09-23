@@ -47,7 +47,7 @@ left_datetime -> Datetime
 message
 -----------
 message id -> int -> Primary Key
-text_message -> String
+message_text -> String
 sender_user_id -> reference from user
 receiver_user_id -> reference from user -> If this field is filled group_id will be null
 datetime -> Datetime
@@ -59,7 +59,7 @@ notification
 --------------
 notificationId -> int -> primary key
 notification_text -> String
-read_unread -> boolean
+read_unread_flag -> boolean
 userid -> Ref from user table
 dateTime -> Datetime
 
@@ -67,7 +67,7 @@ dateTime -> Datetime
 Comment
 -------------------
 comment_id -> int -> Primary key
-comment_date&Time -> date and Time
+comment_date_time -> date and Time
 commented_user_id -> reference from User 
 post_id -> int -> reference from post 
 comment_text -> String 
